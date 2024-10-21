@@ -5,13 +5,12 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table(name="`Users`")
-public class User {
+@Table(name = "`Locations`")
+public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long location_id;
 
-    private String name;
-    private String email;
+    private String location;
 }
