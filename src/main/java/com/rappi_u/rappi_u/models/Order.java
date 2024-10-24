@@ -13,16 +13,23 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long order_id;
 
-    private Long delivery_id;
-
-    private Long user_id;
-
     private Double total;
 
 
     @OneToOne
     @JoinColumn(name = "delivery_id")
-    private Delivery delivery;
+    private Delivery delivery_id;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user_id;
 
+    @Enumerated(EnumType.STRING)
+    private OrderState state;
+
+    @OneToOne
+    @JoinColumn(name = "location_id")
+    private Location location_id;
+
+    private String observation;
 }

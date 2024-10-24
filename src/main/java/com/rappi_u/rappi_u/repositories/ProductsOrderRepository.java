@@ -1,4 +1,7 @@
 package com.rappi_u.rappi_u.repositories;
 
-public interface ProductsOrderRepository {
+import com.rappi_u.rappi_u.models.ProductsOrder;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProductsOrderRepository extends JpaRepository<ProductsOrder, Long> {
 }

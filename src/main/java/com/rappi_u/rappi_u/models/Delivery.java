@@ -15,4 +15,8 @@ public class Delivery {
 
     private String delivery_name;
     private String delivery_email;
+
+    private String password;
+
+    private String cc;
 }

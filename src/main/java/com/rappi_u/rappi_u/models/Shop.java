@@ -1,13 +1,19 @@
 package com.rappi_u.rappi_u.models;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import lombok.Data;
 
+@Entity
+@Data
+@Table(name = "`Shops`")
 public class Shop {
 
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long shop_id;
+
+    private String name;
+
+    private String description;
 }
