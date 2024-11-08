@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface JpaShopRepository extends JpaRepository<Shop, Long>, ShopRepository {
+
+
 }

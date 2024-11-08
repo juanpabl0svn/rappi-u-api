@@ -21,6 +21,5 @@ public class ProductCategory {
     @JoinColumn(name = "id_category")
     private Category category;
 
-    // Getters y Setters
 }
 

@@ -1,5 +1,6 @@
 package com.api.rappi_u.domain.entities;
 
+import com.api.rappi_u.domain.Enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -31,10 +32,10 @@ public class Order {
     private BigDecimal total;
 
     @Column(name = "status")
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
 
     @Column(name = "observations")
     private String observations;
 
-    // Getters y Setters
 }
