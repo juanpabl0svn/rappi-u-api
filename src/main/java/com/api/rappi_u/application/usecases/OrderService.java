@@ -1,10 +1,15 @@
 package com.api.rappi_u.application.usecases;
 
 
-import com.api.rappi_u.domain.entities.Order;
-import com.api.rappi_u.domain.entities.User;
-import com.api.rappi_u.infrastructure.persistence.JpaOrderRepository;
+import com.api.rappi_u.domain.Enums.OrderStatus;
+import com.api.rappi_u.domain.entities.*;
+import com.api.rappi_u.infrastructure.dto.OrderDto;
+import com.api.rappi_u.infrastructure.dto.ProductOrderDto;
+import com.api.rappi_u.infrastructure.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,10 +20,70 @@ public class OrderService {
     @Autowired
     private JpaOrderRepository jpaOrderRepository;
 
+    @Autowired
+    private JpaDeliveryRepository jpaDeliveryRepository;
 
-    public List<Order> getAllOrder() {
+    @Autowired
+    private JpaUserRepository jpaUserRepository;
+
+    @Autowired
+    private JpaLocationRepository jpaLocationRepository;
+
+    @Autowired
+    private JpaProductOrderRepository jpaProductOrderRepository;
+
+    @Autowired
+    private JpaProductRepository jpaProductRepository;
+
+
+    public List<Order> getAllOrders() {
         return jpaOrderRepository.findAll();
     }
+
+    public List<Order> getPendingOrders() {
+        return jpaOrderRepository.findByStatus(OrderStatus.pending);
+    }
+
+
+    public ResponseEntity<?> createOrder(OrderDto order) {
+        try {
+            Delivery delivery = jpaDeliveryRepository.findById(order.getIdDelivery())
+                    .orElseThrow(() -> new Exception("Delivery not found"));
+            User user = jpaUserRepository.findById(order.getIdUser())
+                    .orElseThrow(() -> new Exception("User not found"));
+            Location location = jpaLocationRepository.findById(order.getIdLocation())
+                    .orElseThrow(() -> new Exception("Location not found"));
+
+            Order newOrder = Order.builder()
+                    .status(OrderStatus.pending)
+                    .total(order.getTotal())
+                    .delivery(delivery)
+                    .user(user)
+                    .location(location)
+                    .build();
+
+            newOrder = jpaOrderRepository.save(newOrder);
+
+            for ( ProductOrderDto item : order.getProducts()) {
+                Product product = jpaProductRepository.findById(item.getIdProduct())
+                        .orElseThrow(() -> new Exception("Product not found"));
+
+                ProductOrder productOrder = ProductOrder.builder()
+                        .order(newOrder)
+                        .product(product)
+                        .quantity(item.getQuantity()) // Aquí aseguramos la cantidad
+                        .build();
+
+                jpaProductOrderRepository.save(productOrder);
+            }
+
+            return new ResponseEntity<>(HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 
 
 }

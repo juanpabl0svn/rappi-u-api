@@ -27,5 +27,4 @@ public class ShopController {
         return jpaShopRepository.findAll();
     }
 
-
 }

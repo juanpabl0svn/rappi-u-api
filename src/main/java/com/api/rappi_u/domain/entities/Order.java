@@ -2,13 +2,19 @@ package com.api.rappi_u.domain.entities;
 
 import com.api.rappi_u.domain.Enums.OrderStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "Orders")
 @Data
+@NoArgsConstructor
+@Builder
+@AllArgsConstructor
 public class Order {
 
     @Id

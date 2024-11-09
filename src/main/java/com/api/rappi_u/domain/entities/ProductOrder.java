@@ -1,11 +1,15 @@
 package com.api.rappi_u.domain.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
 @Data
 @Table(name = "ProductsOrder")
+@Builder
+@AllArgsConstructor
 public class ProductOrder {
 
     @Id
