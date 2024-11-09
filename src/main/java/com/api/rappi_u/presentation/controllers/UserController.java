@@ -1,18 +1,15 @@
 package com.api.rappi_u.presentation.controllers;
 
 import com.api.rappi_u.application.usecases.UserService;
-import com.api.rappi_u.domain.entities.Shop;
 import com.api.rappi_u.domain.entities.User;
 import com.api.rappi_u.infrastructure.dto.LoginDto;
-import com.api.rappi_u.infrastructure.persistence.JpaShopRepository;
-import com.api.rappi_u.infrastructure.persistence.JpaUserRepository;
+
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/user")

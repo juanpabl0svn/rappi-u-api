@@ -44,11 +44,13 @@ public class OrderService {
         return jpaOrderRepository.findByStatus(OrderStatus.pending);
     }
 
+//    public ResponseEntity<?> selectOrder(){
+//
+//    }
+
 
     public ResponseEntity<?> createOrder(OrderDto order) {
         try {
-            Delivery delivery = jpaDeliveryRepository.findById(order.getIdDelivery())
-                    .orElseThrow(() -> new Exception("Delivery not found"));
             User user = jpaUserRepository.findById(order.getIdUser())
                     .orElseThrow(() -> new Exception("User not found"));
             Location location = jpaLocationRepository.findById(order.getIdLocation())
@@ -57,7 +59,6 @@ public class OrderService {
             Order newOrder = Order.builder()
                     .status(OrderStatus.pending)
                     .total(order.getTotal())
-                    .delivery(delivery)
                     .user(user)
                     .location(location)
                     .build();

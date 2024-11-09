@@ -26,7 +26,7 @@ public class DeliveryController {
     }
 
     @GetMapping("/orders/{id}")
-    public List<Order> getDeliveryOrders(@Param("id") Long id){
+    public List<Order> getDeliveryOrders(@PathVariable("id") Long id){
         return deliveryService.getDeliveryOrders(id);
     }
 
@@ -39,4 +39,5 @@ public class DeliveryController {
     public ResponseEntity<?> logIn(@Valid @RequestBody LoginDto login) {
         return deliveryService.logIn(login.getEmail(), login.getPassword());
     }
+
 }

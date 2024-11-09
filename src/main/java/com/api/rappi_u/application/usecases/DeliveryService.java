@@ -47,7 +47,7 @@ public class DeliveryService {
     public List<Order> getDeliveryOrders(Long id) {
         try {
             Delivery delivery = jpaDeliveryRepository.findById(id).orElseThrow(() -> new Exception("Delivery not found"));
-            return jpaOrderRepository.findByDeliveryAndStatus(delivery, OrderStatus.onTheWay);
+            return jpaOrderRepository.findAllByDeliveryAndStatus(delivery, OrderStatus.onTheWay);
         } catch (Exception e) {
             return List.of();
         }
