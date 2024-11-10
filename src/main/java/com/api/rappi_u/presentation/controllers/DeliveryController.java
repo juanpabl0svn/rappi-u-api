@@ -30,7 +30,6 @@ public class DeliveryController {
         return deliveryService.getAllDeliveries();
     }
 
-    @Schema()
     @Operation(summary = "Obtener ordenes de repartidor", description = "Retorna todas las ordenes que tiene un repartidos")
     @GetMapping("/orders/{id}")
     public List<Order> getDeliveryOrders(@PathVariable("id") @Parameter(description = "Id del repartidor") Long id) {
