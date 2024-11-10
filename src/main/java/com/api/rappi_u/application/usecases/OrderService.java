@@ -67,7 +67,7 @@ public class OrderService {
     }
 
 
-    public Optional<Order> getOrder(Long id){
+    public Optional<Order> getOrder(Long id) {
         return jpaOrderRepository.findById(id);
     }
 
@@ -108,5 +108,17 @@ public class OrderService {
         }
     }
 
+
+    public ResponseEntity<?> cancelOrder(Long id) {
+        try {
+            Order order = jpaOrderRepository.findById(id).orElseThrow(() -> new Exception("Order not found"));
+            order.setStatus(OrderStatus.cancelled);
+            Order result = jpaOrderRepository.save(order);
+            return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+    }
 
 }

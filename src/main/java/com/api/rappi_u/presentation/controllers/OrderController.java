@@ -51,4 +51,12 @@ public class OrderController {
     }
 
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> cancelOrder(@PathVariable("id") Long id){
+
+        return orderService.cancelOrder(id);
+
+    }
+
+
 }
