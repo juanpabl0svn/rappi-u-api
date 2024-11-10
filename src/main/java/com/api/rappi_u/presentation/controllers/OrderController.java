@@ -4,6 +4,7 @@ import com.api.rappi_u.application.usecases.OrderService;
 import com.api.rappi_u.domain.entities.Delivery;
 import com.api.rappi_u.domain.entities.Order;
 import com.api.rappi_u.infrastructure.dto.OrderDto;
+import com.api.rappi_u.infrastructure.dto.SelectOrderDto;
 import jakarta.validation.Valid;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,12 @@ public class OrderController {
     @GetMapping
     public List<Order> getAllOrders() {
         return orderService.getAllOrders();
+    }
+
+
+    @PostMapping("/set-delivery")
+    public ResponseEntity<?> setDelivery(@Valid @RequestBody SelectOrderDto selectOrderDto){
+        return orderService.selectOrder(selectOrderDto);
     }
 
 

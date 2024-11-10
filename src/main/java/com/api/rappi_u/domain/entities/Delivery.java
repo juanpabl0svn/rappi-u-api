@@ -3,6 +3,7 @@ package com.api.rappi_u.domain.entities;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
@@ -19,28 +20,30 @@ public class Delivery {
     private Long idDelivery;
 
     @Column(name = "first_name")
-    @NotEmpty(message = "firstName is required")
+    @NotNull(message = "firstName is required")
+    @NotEmpty(message = "firstName is empty")
+
     private String firstName;
 
     @Column(name = "last_name")
-    @NotEmpty(message = "lastName is required")
+    @NotNull(message = "lastName is required")
+    @NotEmpty(message = "lastName is empty")
     private String lastName;
 
-    @Column(name = "birthdate")
-    @NotEmpty(message = "birthDate is required")
-    private LocalDate birthDate;
 
     @Column(name = "cc", unique = true)
-    @NotEmpty(message = "cc is required")
+    @NotNull(message = "cc is required")
+    @NotEmpty(message = "cc is empty")
     private String cc;
 
     @Column(name = "email", unique = true)
-    @NotEmpty(message = "email is required")
+    @NotNull(message = "email is required")
     @Email(message = "email is invalid")
     private String email;
 
     @Column(name = "password")
-    @NotEmpty(message = "password is required")
+    @NotNull(message = "password is required")
+    @NotEmpty(message = "password is empty")
     @Length(min = 4, max = 50)
     private String password;
 

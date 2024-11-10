@@ -11,9 +11,6 @@ public class OrderDto {
     @NotNull(message = "idUser is required")
     private Long idUser;
 
-    @NotNull(message = "idDelivery is required")
-    private Long idDelivery;
-
     @NotNull(message = "idLocation is required")
     private Long idLocation;
 

@@ -31,9 +31,6 @@ public class User {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "birthdate")
-    private LocalDate birthDate;
-
     @Column(name = "cc", unique = true)
     @NotEmpty(message = "cc ir required")
     private String cc;

@@ -5,10 +5,10 @@ import com.api.rappi_u.domain.Enums.OrderStatus;
 import com.api.rappi_u.domain.entities.*;
 import com.api.rappi_u.infrastructure.dto.OrderDto;
 import com.api.rappi_u.infrastructure.dto.ProductOrderDto;
+import com.api.rappi_u.infrastructure.dto.SelectOrderDto;
 import com.api.rappi_u.infrastructure.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -44,9 +44,26 @@ public class OrderService {
         return jpaOrderRepository.findByStatus(OrderStatus.pending);
     }
 
-//    public ResponseEntity<?> selectOrder(){
-//
-//    }
+    public ResponseEntity<?> selectOrder(SelectOrderDto selectOrderDto) {
+        try {
+
+            Order order = jpaOrderRepository.findById(selectOrderDto.getIdOrder()).orElseThrow(() -> new Exception("Order not found"));
+
+            Delivery delivery = jpaDeliveryRepository.findById(selectOrderDto.getIdDelivery()).orElseThrow(() -> new Exception("Delivery not found"));
+
+            order.setDelivery(delivery);
+
+            order.setStatus(OrderStatus.onTheWay);
+
+            Order result = jpaOrderRepository.save(order);
+
+            return new ResponseEntity<>(result, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
+
+    }
 
 
     public ResponseEntity<?> createOrder(OrderDto order) {
@@ -65,7 +82,7 @@ public class OrderService {
 
             newOrder = jpaOrderRepository.save(newOrder);
 
-            for ( ProductOrderDto item : order.getProducts()) {
+            for (ProductOrderDto item : order.getProducts()) {
                 Product product = jpaProductRepository.findById(item.getIdProduct())
                         .orElseThrow(() -> new Exception("Product not found"));
 
@@ -78,13 +95,12 @@ public class OrderService {
                 jpaProductOrderRepository.save(productOrder);
             }
 
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            return new ResponseEntity<>(newOrder, HttpStatus.CREATED);
 
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-
 
 
 }
