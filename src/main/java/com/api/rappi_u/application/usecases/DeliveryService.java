@@ -33,9 +33,9 @@ public class DeliveryService {
 
     public ResponseEntity<?> logIn(String email, String password) {
         try {
-            Delivery delivery = jpaDeliveryRepository.findByEmail(email).orElseThrow(() -> new Exception("Error"));
+            Delivery delivery = jpaDeliveryRepository.findByEmail(email).orElseThrow(() -> new Exception("Email or password are wrong"));
             if (!delivery.getPassword().equals(password)) {
-                throw new Exception(String.valueOf(delivery));
+                throw new Exception("Email or password are wrong");
             }
             return new ResponseEntity<>(delivery, HttpStatus.ACCEPTED);
         } catch (Exception e) {

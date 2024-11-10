@@ -27,9 +27,9 @@ public class UserService {
 
     public ResponseEntity<?> logIn(String email, String password) {
         try {
-            User user = jpaUserRepository.findByEmail(email).orElseThrow(() -> new Exception("Error"));
+            User user = jpaUserRepository.findByEmail(email).orElseThrow(() -> new Exception("Email or password are wrong"));
             if (!user.getPassword().equals(password)) {
-                throw new Exception(String.valueOf(user));
+                throw new Exception("Email or password are wrong");
             }
 
             return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
