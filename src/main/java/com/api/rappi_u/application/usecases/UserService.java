@@ -1,7 +1,9 @@
 package com.api.rappi_u.application.usecases;
 
 
+import com.api.rappi_u.domain.entities.Order;
 import com.api.rappi_u.domain.entities.User;
+import com.api.rappi_u.infrastructure.persistence.JpaOrderRepository;
 import com.api.rappi_u.infrastructure.persistence.JpaUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,9 @@ public class UserService {
 
     @Autowired
     private JpaUserRepository jpaUserRepository;
+
+    @Autowired
+    private JpaOrderRepository jpaOrderRepository;
 
 
     public List<User> getAllUsers() {
@@ -36,6 +41,15 @@ public class UserService {
 
         } catch (Exception e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    public List<Order> getUserOrders(Long id) {
+        try {
+            User user = jpaUserRepository.findById(id).orElseThrow(() -> new Exception("User not found"));
+            return jpaOrderRepository.findByUser(user);
+        } catch (Exception e) {
+            return List.of();
         }
 
 

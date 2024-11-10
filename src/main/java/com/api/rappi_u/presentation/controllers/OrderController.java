@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/order")
@@ -29,10 +30,9 @@ public class OrderController {
 
 
     @PostMapping("/set-delivery")
-    public ResponseEntity<?> setDelivery(@Valid @RequestBody SelectOrderDto selectOrderDto){
+    public ResponseEntity<?> setDelivery(@Valid @RequestBody SelectOrderDto selectOrderDto) {
         return orderService.selectOrder(selectOrderDto);
     }
-
 
     @GetMapping("/pending")
     public List<Order> getPendingOrders() {
@@ -43,6 +43,11 @@ public class OrderController {
     @PostMapping("/create")
     public ResponseEntity<?> createOrder(@Valid @RequestBody OrderDto order) {
         return orderService.createOrder(order);
+    }
+
+    @GetMapping("/{id}")
+    public Optional<Order> getOrder(@PathVariable("id") Long id) {
+        return orderService.getOrder(id);
     }
 
 

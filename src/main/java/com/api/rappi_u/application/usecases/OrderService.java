@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderService {
@@ -63,6 +64,11 @@ public class OrderService {
         }
 
 
+    }
+
+
+    public Optional<Order> getOrder(Long id){
+        return jpaOrderRepository.findById(id);
     }
 
 

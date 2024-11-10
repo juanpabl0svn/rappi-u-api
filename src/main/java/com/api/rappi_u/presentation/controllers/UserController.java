@@ -1,6 +1,7 @@
 package com.api.rappi_u.presentation.controllers;
 
 import com.api.rappi_u.application.usecases.UserService;
+import com.api.rappi_u.domain.entities.Order;
 import com.api.rappi_u.domain.entities.User;
 import com.api.rappi_u.infrastructure.dto.LoginDto;
 
@@ -22,6 +23,11 @@ public class UserController {
     @GetMapping
     public List<User> getAllUsers(){
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/order/{id}")
+    public List<Order> getUserOrders(@PathVariable("id") Long id){
+        return userService.getUserOrders(id);
     }
 
     @PostMapping("/register")
