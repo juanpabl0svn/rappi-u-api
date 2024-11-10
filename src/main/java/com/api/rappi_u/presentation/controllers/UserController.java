@@ -35,11 +35,13 @@ public class UserController {
         return userService.getUserOrders(id);
     }
 
+    @Operation(summary = "Registrar usuario", description = "Retorna el usuario creado")
     @PostMapping("/register")
-    public User register(@Valid @RequestBody User user){
+    public User register(@Valid @RequestBody @Parameter(description = "Datos del usuario") User user){
         return userService.register(user);
     }
 
+    @Operation(summary = "Iniciar sesión como usuario", description = "Retorna el usuario logeado")
     @PostMapping("/login")
     public ResponseEntity<?> logIn(@Valid @RequestBody LoginDto login){
         return userService.logIn(login.getEmail(),login.getPassword());

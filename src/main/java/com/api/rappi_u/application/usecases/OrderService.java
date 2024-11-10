@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -67,8 +68,21 @@ public class OrderService {
     }
 
 
-    public Optional<Order> getOrder(Long id) {
-        return jpaOrderRepository.findById(id);
+    public ResponseEntity<?> getOrder(Long id) {
+
+        try {
+
+            Order order = jpaOrderRepository.findById(id).orElseThrow(() -> new Exception("Order not found"));
+
+            List<ProductOrder> products = jpaProductOrderRepository.findByOrder(order);
+
+            return new ResponseEntity<>(Map.of("products", products,
+                    "order", order), HttpStatus.ACCEPTED);
+
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+
     }
 
 

@@ -55,17 +55,15 @@ public class OrderController {
 
     @Operation(summary = "Obtener orden", description = "Retorna la orden por id")
     @GetMapping("/{id}")
-    public Optional<Order> getOrder(@PathVariable("id") @Parameter(description = "id de la orden") Long id) {
+    public ResponseEntity<?> getOrder(@PathVariable("id") @Parameter(description = "id de la orden") Long id) {
         return orderService.getOrder(id);
     }
-
 
     @Operation(summary = "Cancelar una orden", description = "Ahora la orden no es valida, cambia su estado a cancelled")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> cancelOrder(@PathVariable("id") @Parameter(description = "Id de la orden") Long id){
 
         return orderService.cancelOrder(id);
-
     }
 
 

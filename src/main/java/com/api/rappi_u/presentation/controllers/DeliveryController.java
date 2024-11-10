@@ -37,7 +37,6 @@ public class DeliveryController {
     }
 
     @Operation(summary = "Crear repartidor", description = "Crea un repartidor")
-
     @PostMapping("/register")
     public Delivery register(@Valid @RequestBody @Parameter(description = "Valores del repartidor") Delivery user) {
         return deliveryService.register(user);
