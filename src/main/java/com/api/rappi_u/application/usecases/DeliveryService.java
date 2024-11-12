@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DeliveryService {
@@ -51,6 +52,10 @@ public class DeliveryService {
         } catch (Exception e) {
             return List.of();
         }
+    }
+
+    public Optional<Delivery> getDelivery(Long id){
+        return jpaDeliveryRepository.findById(id);
     }
 
 }

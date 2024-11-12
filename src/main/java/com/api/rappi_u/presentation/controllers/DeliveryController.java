@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "/delivery")
@@ -46,6 +47,12 @@ public class DeliveryController {
     @PostMapping("/login")
     public ResponseEntity<?> logIn(@Valid @RequestBody LoginDto login) {
         return deliveryService.logIn(login.getEmail(), login.getPassword());
+    }
+
+    @Operation(summary = "Obtener repartidor", description = "Retorna repartidor")
+    @GetMapping("/{id}")
+    public Optional<Delivery> getDelivery(@PathVariable("id") @Parameter(description = "Id del repartidor") Long id) {
+        return deliveryService.getDelivery(id);
     }
 
 }

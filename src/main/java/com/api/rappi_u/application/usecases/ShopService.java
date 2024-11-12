@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ShopService {
@@ -14,8 +15,13 @@ public class ShopService {
     private JpaShopRepository jpaShopRepository;
 
 
-    List<Shop> getAllShops(){
+    public List<Shop> getAllShops(){
         return jpaShopRepository.findAll();
+    }
+
+
+    public Optional<Shop> getShop(Long id){
+        return jpaShopRepository.findById(id);
     }
 
 
